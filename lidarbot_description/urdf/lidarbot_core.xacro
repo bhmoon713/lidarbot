@@ -1,241 +1,206 @@
-<?xml version="1.0" ?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-  <xacro:include filename="inertial_macros.xacro"/>
+    <xacro:include filename="inertial_macros.xacro"/>
 
-  <!-- Robot's base properties -->
-  <xacro:property name="base_length" value="0.21"/>
-  <xacro:property name="base_width" value="0.11"/>
-  <xacro:property name="base_height" value="0.035"/>
 
-  <!-- Robot's wheel properties -->
-  <xacro:property name="wheel_radius" value="0.0325"/>
-  <xacro:property name="wheel_height" value="0.025"/>
-  <xacro:property name="wheel_mass" value="0.031"/>
+    <xacro:property name="chassis_length" value="0.250"/>
+    <xacro:property name="chassis_width" value="0.147"/>
+    <xacro:property name="chassis_height" value="0.065"/>
+    <xacro:property name="chassis_mass" value="1.0"/>
+    <xacro:property name="wheel_radius" value="0.05"/>
+    <xacro:property name="wheel_thickness" value="0.040"/>
+    <xacro:property name="wheel_mass" value="0.05"/>
+    <xacro:property name="wheel_offset_x" value="0.25"/>
+    <xacro:property name="wheel_offset_y" value="0.115"/>
+    <xacro:property name="wheel_offset_z" value="0.0325"/>
 
-  <!-- Distance between centre of wheel and robot base -->
-  <xacro:property name="wheel_zoff" value="0.0125"/>
 
-  <link name="base_footprint"/> 	
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
 
-   <joint name="base_joint" type="fixed">
-     <parent link="base_footprint"/>
-     <child link="base_link"/>
-     <origin xyz="-0.076 0 ${(wheel_radius + wheel_zoff / 2)}" rpy="0 0 0"/>
-   </joint>
-	
-  <!-- Robot base chasis-->
-  <link name="base_link">
-      <visual>
-        <origin xyz="${base_length/2} 0 ${-wheel_zoff}" rpy="0 0 0"/>
-          <geometry>
-              <mesh filename="package://lidarbot_description/meshes/robot_chassis.dae" />
-          </geometry>
-      </visual>
-      <collision>
-        <origin xyz="${base_length/2} 0 ${-wheel_zoff}" rpy="0 0 0"/>
-        <geometry>
-          <box size="${base_length} ${base_width} ${base_height}"/>
-        </geometry>
-      </collision>
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
 
-    <!-- Caster mount -->
-      <visual name="caster_mount_visual">
-          <origin xyz="0.191 0 -0.0475" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/caster_mount.dae" />
-        </geometry>
-      </visual>
-      <collision name="caster_mount_collision">
-        <origin xyz="0.191 0 -0.005" rpy="0 0 0"/>
-        <geometry>
-          <cylinder radius="0.023" length="0.0125"/>
-        </geometry>
-      </collision>
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
 
-      <!-- Rpi stand -->
-      <visual name="rpi_4_stand_visual">
-        <origin xyz="0.045 0.015 0.031" rpy="${pi} 0 ${-pi}"/>
-          <geometry>
-              <mesh filename="package://lidarbot_description/meshes/rpi_stand.dae" />
-          </geometry>
-      </visual>
-      <collision name="rpi_4_stand_collision">
-        <origin xyz="0.045 0 0.017" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.098 0.065 0.034"/>
-        </geometry>
-      </collision>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
 
-      <!-- Raspberry Pi -->
-      <visual name="rpi_4_visual">
-        <origin xyz="0.046 0.00245 0.033" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/rpi_4.dae"/>
-        </geometry>
-      </visual>
-      <collision name="rpi_4_collision">
-        <origin xyz="0.047 0.005 0.041" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.09 0.06 0.02"/>
-        </geometry>
-      </collision>
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
 
-      <!-- Power bank stand -->
-      <visual name="power_bank_stand_visual">
-        <origin xyz="0.138 0.015 0.031" rpy="${pi} 0 ${pi}"/>
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/power_bank_stand.dae"/>
-        </geometry>
-      </visual>
-      <collision name="power_bank_stand_collision">
-        <origin xyz="0.138 0 0.0085" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.098 0.065 0.015"/>
-        </geometry>
-      </collision>
+    <!-- BASE FOOTPRINT-->
 
-      <!-- Power bank -->
-      <visual name="power_bank_visual">
-        <origin xyz="0.1685 0.04775 0.015" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/power_bank.dae"/>
-        </geometry>
-      </visual>
-      <collision name="power_bank_collision">
-        <origin xyz="0.138 0 0.025" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.096 0.062 0.02"/>
-        </geometry>
-      </collision>
-      
-      <!-- Rplidar stand -->
-      <visual name="rplidar_stand_visual">
-        <origin xyz="0.138 0.015 0.017" rpy="0 0 ${-2*pi}"/> 
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/rplidar_stand.dae"/>
-        </geometry>
-      </visual>
-      <collision name="rplidar_stand_collision">
-        <origin xyz="0.138 0 0.04" rpy="0 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.098 0.065 0.015"/>
-        </geometry>
-      </collision>
+    <link name="base_footprint">
 
-      <!-- Rplidar base -->
-      <visual name="rplidar_base_visual">
-        <origin xyz="0.13985 0.0087 0.037" rpy="0 0 ${-pi/2}"/>
-          <geometry>
-            <mesh filename="package://lidarbot_description/meshes/rplidar_base.dae"/>
-          </geometry>
+    </link>
+
+
+    <!-- BASE LINK -->
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 ${wheel_radius}"/>
+    </joint>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="${-chassis_length/2 + 0.05} 0 0"/>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+            <material name="orange"/>
         </visual>
-      <collision name="rplidar_base_collision">
-        <origin xyz="0.138 0 0.056" rpy="0 0 ${-pi/2}"/>
-        <geometry>
-          <box size="0.11 0.072 0.035"/>
-        </geometry>
-      </collision>
+        <collision>
+            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.5" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}">
+            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
 
-      <!-- Camera mount -->
-      <visual name="camera_mount_visual">
-        <origin xyz="0.16 0.0335 0.001" rpy="0 0 ${pi}"/>
-          <geometry>
-            <mesh filename="package://lidarbot_description/meshes/rpi_camera_mount.dae"/>
-          </geometry>
-      </visual>
-      <collision name="camera_mount_collision">
-        <origin xyz="0.197 0.0 0.032" rpy="${pi/2} 0 ${pi/2}"/>
-        <geometry>
-          <box size="0.048 0.06 0.033"/>
-        </geometry>
-      </collision>
+    <gazebo reference="base_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
 
-    <xacro:box_inertia mass="0.864" length="${base_length}" width="${base_width}" height="${base_height}">
-      <origin xyz="0.105 0 0.0175" rpy="0 0 0"/>
-    </xacro:box_inertia>
-  </link>
+    <!-- LEFT WHEEL LINK -->
 
-  <!-- Left Wheel -->
-  <link name="left_wheel">
-    <visual>
-        <geometry>
-          <mesh filename="package://lidarbot_description/meshes/left_wheel.dae" />
-        </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0.0155" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="0 ${wheel_offset_y} 0" rpy="-${pi/2} 0 0" />
+        <axis xyz="0 0 1"/>
+    </joint>
 
-    <xacro:cylinder_inertia mass="${wheel_mass}" length="${wheel_height}" radius="${wheel_radius}">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:cylinder_inertia>
-  </link>
+    <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
 
-  <joint name="left_wheel_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="left_wheel"/>
-    <origin xyz="0.077 0.055 -${wheel_zoff}" rpy="${pi/2} 0 ${pi}"/>
-    <axis xyz="0 0 1"/>
-  </joint>
+    <gazebo reference="left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
 
-  <!-- Right Wheel -->
-  <link name="right_wheel">
-    <visual>
-      <geometry>
-        <mesh filename="package://lidarbot_description/meshes/right_wheel.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.0065" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
+<!-- REAR LEFT WHEEL LINK -->
 
-    <xacro:cylinder_inertia mass="${wheel_mass}" length="${wheel_height}" radius="${wheel_radius}">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:cylinder_inertia>
-  </link>
+    <joint name="rear_left_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rear_left_wheel"/>
+        <origin xyz="-0.15 ${wheel_offset_y} 0" rpy="-${pi/2} 0 0" />
+        <axis xyz="0 0 1"/>
+    </joint>
 
-  <joint name="right_wheel_joint" type="continuous">
-    <parent link="base_link"/>
-    <child link="right_wheel"/>
-    <origin xyz="0.077 -0.065 -${wheel_zoff}" rpy="${pi/2} 0 ${-pi}"/>
-    <axis xyz="0 0 1"/>
-  </joint>
+    <link name="rear_left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
 
-  <!-- Caster wheel -->
-  <link name="caster_wheel">
-    <visual>
-      <geometry>
-        <mesh filename="package://lidarbot_description/meshes/caster_wheel.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.001" rpy="0 0 ${pi/2}"/>
-      <geometry>
-        <sphere radius="0.015"/>
-      </geometry>
-    </collision>
+    <gazebo reference="rear_left_wheel">
+        <material>Gazebo/Blue</material>
+        <mu1 value="0.001"/>
+        <mu2 value="0.001"/>
+    </gazebo>
 
-    <xacro:sphere_inertia mass="0.033" radius="0.025">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:sphere_inertia>
-  </link>
 
-  <joint name="caster_wheel_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="caster_wheel"/>
-    <origin xyz="0.1975 0 -0.031" rpy="0 0 ${pi/2}"/>
-  </joint>
 
-  <gazebo reference="caster_wheel">
-    <mu1 value="0.001"/>
-    <mu2 value="0.001"/>
-  </gazebo>
+
+    <!-- RIGHT WHEEL LINK -->
+
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0 ${-wheel_offset_y} 0" rpy="${pi/2} 0 0" />
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Blue</material>
+
+    </gazebo>
+
+
+    <!-- REAR RIGHT WHEEL LINK -->
+
+    <joint name="rear_right_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rear_right_wheel"/>
+        <origin xyz="-0.15 ${-wheel_offset_y} 0" rpy="${pi/2} 0 0" />
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <link name="rear_right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <gazebo reference="rear_right_wheel">
+        <material>Gazebo/Blue</material>
+        <mu1 value="0.001"/>
+        <mu2 value="0.001"/>
+    </gazebo>
+
 
 </robot>

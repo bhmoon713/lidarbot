@@ -57,6 +57,7 @@ add_executable(mpu6050_offsets src/mpu6050_lib.cpp src/mpu6050_offsets.cpp)
 
 # Install Cpp executables
 install(TARGETS
+  mpu6050_offsets
   DESTINATION lib/${PROJECT_NAME}
 )
 

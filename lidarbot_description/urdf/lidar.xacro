@@ -14,15 +14,15 @@
                 <cylinder radius="0.037" length="0.021"/>
             </geometry>
         </collision>
-         <xacro:cylinder_inertia mass="0.07" length="0.021" radius="0.037">
+         <xacro:inertial_cylinder mass="0.07" length="0.021" radius="0.037">
             <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:cylinder_inertia>
+        </xacro:inertial_cylinder>
    </link>
 
     <joint name="lidar_joint" type="fixed">
         <parent link="base_link"/>
         <child link="lidar_link"/>
-        <origin xyz="0.1385 0.0095 0.08" rpy="0 0 ${-pi/2}"/>
+        <origin xyz="0 0 0.145" rpy="0 0 ${-pi/2}"/>
         <axis xyz="0 0 1"/>
     </joint>
 
