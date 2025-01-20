@@ -4,7 +4,7 @@
   <!-- Camera -->
   <link name="camera_link">
     <visual>
-      <origin xyz="-0.0115 0.0125 0.0052" rpy="${pi/2} ${pi} ${pi/2}"/>
+      <origin xyz="-0.140 0.0 0.117" rpy="${pi/2} ${pi} ${pi/2}"/>
       <geometry>
         <mesh filename="package://lidarbot_description/meshes/rpi_camera.dae"/>
       </geometry>
@@ -14,7 +14,7 @@
   <joint name="camera_joint" type="fixed">
     <parent link="base_link"/>
     <child link="camera_link"/>
-    <origin xyz="-0.15 0 0.28" rpy="0 0 0"/> 
+    <origin xyz="0.140 0.0 0.117" rpy="0 0 0"/> 
   </joint>
 
   <link name="camera_link_optical"></link>
